@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main id="main">
-      <v-app-bar app image="./assets/a4754a82ckef2a11a55447d8f48a81f7.jpg">
+      <v-app-bar class="app-bar" app image="./assets/a4754a82ckef2a11a55447d8f48a81f7.jpg">
         <v-app-bar-nav-icon></v-app-bar-nav-icon>
         <template v-slot:append>
           <v-btn icon="mdi-refresh"></v-btn>
@@ -9,32 +9,31 @@
         </template>
         <v-toolbar-title>Guess Number</v-toolbar-title>
       </v-app-bar>
+
       <v-container class="guess-card">
-        <v-card prepend-icon="mdi-counter" :subtitle="textRealNum" width="600">
+
+        <v-card prepend-icon="mdi-counter" :subtitle="textRealNum" width="auto">
           <template v-slot:title>
             <span class="font-weight-black">猜数字</span>
           </template>
           <v-container>
             <v-row align="center">
-              <v-col cols="500">
-                <v-text-field label="Enter a number you guess" v-model:model-value="numberChoose" />
+              <v-col class="d-flex justify-center align-center">
+                <v-text-field label="Enter a number you guess" hide-details="auto" v-model:model-value="numberChoose" />
               </v-col>
-              <v-col cols="auto">
-                <v-btn variant="tonal" :ripple="true" @click="checkNumber(numberChoose)">提交</v-btn>
+              <v-col cols="auto" class="d-flex justify-center align-center">
+                <v-btn variant="tonal" :ripple="true" @click="checkNumber(numberChoose)" color="#3F51B5">提交</v-btn>
               </v-col>
             </v-row>
           </v-container>
         </v-card>
       </v-container>
+
       <v-container>
-      <v-alert
-        v-if="winAttribute" width="600"
-        text="你答对了"
-        title="Alert title" type="success">
-      </v-alert>
-      <v-alert v-if="showError" width="600"
-      text="你答错了" title="Alert title" type="error">
-      </v-alert>
+        <v-alert v-if="winAttribute" text="你答对了" title="Alert title" type="success">
+        </v-alert>
+        <v-alert v-if="showError" text="你答错了" title="Alert title" type="error">
+        </v-alert>
       </v-container>
     </v-main>
   </v-app>
@@ -81,4 +80,4 @@ function checkNumber(inputNum: (string | null)) {
 }
 </script>
 
-<style></style>
+<style scoped></style>
