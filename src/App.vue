@@ -13,22 +13,21 @@
 
       <div class="guess-area">
         <v-container class="game-area">
-
-              <v-card prepend-icon="mdi-counter" :subtitle="textRealNum">
-                <template v-slot:title>
-                  <span class="font-weight-black">猜数字</span>
-                </template>
-                <v-container>
-                  <v-row align="center">
-                    <v-col class="d-flex justify-center align-center">
-                      <v-text-field label="Enter a number you guess" hide-details="auto" v-model="numberChoose" />
-                    </v-col>
-                    <v-col cols="auto" class="d-flex justify-center align-center">
-                      <v-btn variant="tonal" :ripple="true" @click="checkNumber" color="#3F51B5">提交</v-btn>
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </v-card>
+          <v-card prepend-icon="mdi-counter" :subtitle="textRealNum">
+            <template v-slot:title>
+              <span class="font-weight-black">猜数字</span>
+            </template>
+            <v-container>
+              <v-row align="center">
+                <v-col class="d-flex justify-center align-center">
+                  <v-text-field label="Enter a number you guess" hide-details="auto" v-model="numberChoose" />
+                </v-col>
+                <v-col cols="auto" class="d-flex justify-center align-center">
+                  <v-btn variant="tonal" :ripple="true" @click="checkNumber" color="#3F51B5">提交</v-btn>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card>
 
         </v-container>
 
@@ -124,5 +123,7 @@ function showAlert(message: string, type: 'error' | 'success' = 'error') {
 
 .game-area {
   margin: auto;
+  margin-top: 12px;
+  margin-bottom: -12px;
 }
 </style>
