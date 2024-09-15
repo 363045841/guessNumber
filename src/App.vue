@@ -1,11 +1,21 @@
 <template>
   <v-app>
     <v-main id="main" :class="responsiveClass">
-      <v-app-bar class="app-bar" app image="./assets/a4754a82ckef2a11a55447d8f48a81f7.jpg">
-        <v-app-bar-nav-icon></v-app-bar-nav-icon>
+      <v-app-bar :style="{ color: 'white' }" class="app-bar" app image="./assets/a4754a82ckef2a11a55447d8f48a81f7.jpg">
+        <v-app-bar-nav-icon @click="console.log('title')"></v-app-bar-nav-icon>
         <template v-slot:append>
-          <v-btn icon="mdi-refresh"></v-btn>
-          <v-btn icon="mdi-dots-vertical"></v-btn>
+          <v-tooltip location="bottom">
+            <template v-slot:activator="{ props }">
+              <v-btn v-bind="props" icon="mdi-refresh" @click="playAgain()"></v-btn>
+            </template>
+            <span>重新开始</span>
+          </v-tooltip>
+          <v-tooltip location="bottom">
+            <template v-slot:activator="{ props }">
+              <v-btn v-bind="props" icon="mdi-dots-vertical"></v-btn>
+            </template>
+            <span>更多</span>
+          </v-tooltip>
         </template>
         <v-toolbar-title>Guess Number</v-toolbar-title>
       </v-app-bar>
@@ -47,6 +57,7 @@
 </template>
 
 <script lang="ts" setup>
+import { whileStatement } from '@babel/types';
 import { ref, computed } from 'vue'
 
 const numberChoose = ref<string | null>(null)
@@ -102,6 +113,13 @@ function showAlert(message: string, type: 'error' | 'success' = 'error') {
       winAttribute.value = false
     }, 2000)
   }
+}
+
+function playAgain() {
+  randomNum.value = Math.floor(Math.random() * 100)
+  showError.value = false
+  winAttribute.value = false
+  numberChoose.value = null
 }
 </script>
 

@@ -9,6 +9,8 @@ import { registerPlugins } from '@/plugins'
 
 // Components
 import App from './App.vue'
+import 'vuetify/styles'
+
 
 // Composables
 import { createApp } from 'vue'
