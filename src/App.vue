@@ -10,16 +10,31 @@
             </template>
             <span>重新开始</span>
           </v-tooltip>
-          <v-tooltip location="bottom">
+
+          <v-menu v-model:active="menuActive" offset-y transition="scale-transition">
+
             <template v-slot:activator="{ props }">
-              <v-btn v-bind="props" icon="mdi-dots-vertical"></v-btn>
+              <v-btn v-bind="props" icon="mdi-dots-vertical" @click="menuActive = !menuActive"></v-btn>
             </template>
-            <span>更多</span>
-          </v-tooltip>
+
+            <v-list>
+              <v-list-item @click="console.log('1')">
+                <v-list-item-title>我超，我可以被点击</v-list-item-title>
+              </v-list-item>
+
+              <v-list-item disabled>
+                <v-list-item-title>我超，我不可以被点击</v-list-item-title>
+              </v-list-item>
+
+              <v-list-item @click="console.log('1')">
+                <v-list-item-title>我超，点点我的</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+
         </template>
         <v-toolbar-title>Guess Number</v-toolbar-title>
       </v-app-bar>
-
 
       <div class="guess-area">
         <v-container class="game-area">
@@ -38,15 +53,14 @@
               </v-row>
             </v-container>
           </v-card>
-
         </v-container>
 
         <v-container class="game-area">
           <v-row align="center" justify="center">
             <v-col class="d-flex justify-center align-center">
-              <v-alert v-if="winAttribute" text="你答对了" title="Alert title" type="success">
+              <v-alert v-if="winAttribute" text="你答对了" title="恭喜" type="success">
               </v-alert>
-              <v-alert v-if="showError" text="你答错了" title="Alert title" type="error">
+              <v-alert v-if="showError" text="你答错了" title="该死" type="error">
               </v-alert>
             </v-col>
           </v-row>
@@ -57,13 +71,13 @@
 </template>
 
 <script lang="ts" setup>
-import { whileStatement } from '@babel/types';
 import { ref, computed } from 'vue'
 
 const numberChoose = ref<string | null>(null)
 const randomNum = ref(Math.floor(Math.random() * 100))
 const winAttribute = ref<boolean>(false)
 const showError = ref<boolean>(false)
+const menuActive = ref<boolean>(false) // 控制下拉菜单的显示和隐藏
 
 const textRealNum = computed<string>(() => {
   return `请你猜一个数字, 我们会告诉你是大是小, 偷偷告诉你数字是 ${randomNum.value}`
