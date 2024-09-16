@@ -69,13 +69,7 @@
         </v-container>
       </div>
 
-      <v-navigation-drawer v-model="sidebarShow">
-        <v-list-item title="Guess Game" subtitle="hello"></v-list-item>
-        <v-divider></v-divider>
-        <v-list-item link title="我超，我可以被点击"></v-list-item>
-        <v-list-item link title="我超，我不可以被点击" disabled></v-list-item>
-        <v-list-item link title="我超，点点我的"></v-list-item>
-      </v-navigation-drawer>
+      <sidebar :sidebarShow></sidebar>
 
     </v-main>
   </v-app>
@@ -85,6 +79,7 @@
 import { ref, computed } from 'vue'
 import { useGameData } from './stores/gamedata';
 import { storeToRefs } from 'pinia';
+import sidebar from './styles/sidebar.vue';
 const GameData = useGameData()
 const { numberChoose } = storeToRefs(GameData)
 const winAttribute = storeToRefs(GameData).alertRightShow
@@ -102,7 +97,7 @@ const responsiveClass = computed<string>(() => {
 function playAgain() {
   GameData.randomNumber = Math.floor(Math.random() * 100)
   GameData.numberChoose = null
-  localStorage.setItem('randomNumber',String(GameData.randomNumber))
+  localStorage.setItem('randomNumber', String(GameData.randomNumber))
 }
 
 onMounted(() => {
