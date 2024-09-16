@@ -46,7 +46,7 @@
                   <v-text-field label="Enter a number you guess" hide-details="auto" v-model="numberChoose" />
                 </v-col>
                 <v-col cols="auto" class="d-flex justify-center align-center">
-                  <v-btn variant="tonal" :ripple="true" @click="numberSubmit()" color="#3F51B5">提交</v-btn>
+                  <v-btn variant="tonal" :ripple="true" @click="GameData.submitNumber()" color="#3F51B5">提交</v-btn>
                 </v-col>
               </v-row>
             </v-container>
@@ -56,10 +56,11 @@
         <v-container class="game-area">
           <v-row align="center" justify="center">
             <v-col class="d-flex justify-center align-center">
-              <v-alert v-if="winAttribute && GameData.isSubmit" text="你答对了" title="恭喜" type="success">
-              </v-alert>
-              <v-alert v-if="showError && GameData.isSubmit" text="你答错了" title="该死" type="error">
-              </v-alert>
+              <v-fade-transition>
+                <v-alert v-if="winAttribute && GameData.isSubmit" text="你答对了" title="恭喜" type="success">
+                </v-alert>
+                <v-alert v-if="showError && GameData.isSubmit" text="你答错了" title="该死" type="error">
+                </v-alert></v-fade-transition>
             </v-col>
           </v-row>
         </v-container>
@@ -76,10 +77,6 @@ const GameData = useGameData()
 const { numberChoose } = storeToRefs(GameData)
 const winAttribute = storeToRefs(GameData).alertRightShow
 const showError = storeToRefs(GameData).alertErrorShow
-
-function numberSubmit() {
-  GameData.isSubmit = true
-}
 
 const menuActive = ref<boolean>(false) // 控制下拉菜单的显示和隐藏
 const textRealNum = computed<string>(() => {
