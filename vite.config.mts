@@ -71,5 +71,8 @@ export default defineConfig({
   server: {
     port: 3000,
   },
-  base: '/guessNum/'
+  base: '/guessNum/',
+  build: {
+    outDir: 'C:\\Users\\3630\\Desktop\\dist',
+  },
 })

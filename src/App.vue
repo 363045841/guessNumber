@@ -12,11 +12,9 @@
           </v-tooltip>
 
           <v-menu v-model:active="menuActive" offset-y transition="scale-transition">
-
             <template v-slot:activator="{ props }">
               <v-btn v-bind="props" icon="mdi-dots-vertical" @click="menuActive = !menuActive"></v-btn>
             </template>
-
             <v-list>
               <v-list-item @click="console.log('1')">
                 <v-list-item-title>我超，我可以被点击</v-list-item-title>
@@ -48,7 +46,7 @@
                   <v-text-field label="Enter a number you guess" hide-details="auto" v-model="numberChoose" />
                 </v-col>
                 <v-col cols="auto" class="d-flex justify-center align-center">
-                  <v-btn variant="tonal" :ripple="true" @click="checkNumber" color="#3F51B5">提交</v-btn>
+                  <v-btn variant="tonal" :ripple="true" @click="numberSubmit()" color="#3F51B5">提交</v-btn>
                 </v-col>
               </v-row>
             </v-container>
@@ -58,9 +56,9 @@
         <v-container class="game-area">
           <v-row align="center" justify="center">
             <v-col class="d-flex justify-center align-center">
-              <v-alert v-if="winAttribute" text="你答对了" title="恭喜" type="success">
+              <v-alert v-if="winAttribute && GameData.isSubmit" text="你答对了" title="恭喜" type="success">
               </v-alert>
-              <v-alert v-if="showError" text="你答错了" title="该死" type="error">
+              <v-alert v-if="showError && GameData.isSubmit" text="你答错了" title="该死" type="error">
               </v-alert>
             </v-col>
           </v-row>
@@ -72,68 +70,28 @@
 
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
+import { useGameData } from './stores/gamedata';
+import { storeToRefs } from 'pinia';
+const GameData = useGameData()
+const { numberChoose } = storeToRefs(GameData)
+const winAttribute = storeToRefs(GameData).alertRightShow
+const showError = storeToRefs(GameData).alertErrorShow
 
-const numberChoose = ref<string | null>(null)
-const randomNum = ref(Math.floor(Math.random() * 100))
-const winAttribute = ref<boolean>(false)
-const showError = ref<boolean>(false)
+function numberSubmit() {
+  GameData.isSubmit = true
+}
+
 const menuActive = ref<boolean>(false) // 控制下拉菜单的显示和隐藏
-
 const textRealNum = computed<string>(() => {
-  return `请你猜一个数字, 我们会告诉你是大是小, 偷偷告诉你数字是 ${randomNum.value}`
+  return `请你猜一个数字, 我们会告诉你是大是小, 偷偷告诉你数字是 ${GameData.randomNumber}`
 })
-
 const responsiveClass = computed<string>(() => {
   console.log(window.innerWidth < 600 ? 'mobile' : 'desktop')
   return window.innerWidth < 600 ? 'mobile' : 'desktop'
 })
-
-function checkNumber() {
-  if (numberChoose.value === null || numberChoose.value.trim() === '') {
-    showAlert('please input a number')
-    return
-  }
-
-  const num = Number(numberChoose.value)
-  if (isNaN(num)) {
-    showAlert('please input a number')
-    return
-  }
-
-  if (num > randomNum.value) {
-    showAlert('too big', 'error')
-  } else if (num < randomNum.value) {
-    showAlert('too small', 'error')
-  } else {
-    winAttribute.value = true
-    setTimeout(() => {
-      winAttribute.value = false
-      randomNum.value = Math.floor(Math.random() * 100)
-    }, 2000)
-  }
-
-  numberChoose.value = null
-}
-
-function showAlert(message: string, type: 'error' | 'success' = 'error') {
-  if (type === 'error') {
-    showError.value = true
-    /* setTimeout(() => {
-      showError.value = false
-    }, 2000) */
-  } else {
-    winAttribute.value = true
-    setTimeout(() => {
-      winAttribute.value = false
-    }, 2000)
-  }
-}
-
 function playAgain() {
-  randomNum.value = Math.floor(Math.random() * 100)
-  showError.value = false
-  winAttribute.value = false
-  numberChoose.value = null
+  GameData.randomNumber = Math.floor(Math.random() * 100)
+  GameData.numberChoose = null
 }
 </script>
 
