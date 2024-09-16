@@ -60,19 +60,22 @@
                 <v-alert v-if="winAttribute && GameData.isSubmit" text="你答对了" title="恭喜" type="success">
                 </v-alert>
                 <v-alert v-if="showError && GameData.isSubmit" text="你答错了" title="该死" type="error">
-                </v-alert></v-fade-transition>
+                </v-alert>
+                <v-alert v-model="GameData.restoreShow" :text="GameData.restoreText" title="恢复数据" type="success">
+                </v-alert>
+              </v-fade-transition>
             </v-col>
           </v-row>
         </v-container>
       </div>
 
-        <v-navigation-drawer v-model="sidebarShow">
-          <v-list-item title="Guess Game" subtitle="hello"></v-list-item>
-          <v-divider></v-divider>
-          <v-list-item link title="我超，我可以被点击"></v-list-item>
-          <v-list-item link title="我超，我不可以被点击" disabled></v-list-item>
-          <v-list-item link title="我超，点点我的"></v-list-item>
-        </v-navigation-drawer>
+      <v-navigation-drawer v-model="sidebarShow">
+        <v-list-item title="Guess Game" subtitle="hello"></v-list-item>
+        <v-divider></v-divider>
+        <v-list-item link title="我超，我可以被点击"></v-list-item>
+        <v-list-item link title="我超，我不可以被点击" disabled></v-list-item>
+        <v-list-item link title="我超，点点我的"></v-list-item>
+      </v-navigation-drawer>
 
     </v-main>
   </v-app>
@@ -99,7 +102,13 @@ const responsiveClass = computed<string>(() => {
 function playAgain() {
   GameData.randomNumber = Math.floor(Math.random() * 100)
   GameData.numberChoose = null
+  localStorage.setItem('randomNumber',String(GameData.randomNumber))
 }
+
+onMounted(() => {
+  console.log('mounted')
+  GameData.initRandomNumber()
+})
 </script>
 
 <style scoped>
