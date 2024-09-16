@@ -2,7 +2,7 @@
   <v-app>
     <v-main id="main" :class="responsiveClass">
       <v-app-bar :style="{ color: 'white' }" class="app-bar" app image="./assets/a4754a82ckef2a11a55447d8f48a81f7.jpg">
-        <v-app-bar-nav-icon @click="console.log('title')"></v-app-bar-nav-icon>
+        <v-app-bar-nav-icon @click="sidebarShow = !sidebarShow"></v-app-bar-nav-icon>
         <template v-slot:append>
           <v-tooltip location="bottom">
             <template v-slot:activator="{ props }">
@@ -65,6 +65,15 @@
           </v-row>
         </v-container>
       </div>
+
+        <v-navigation-drawer v-model="sidebarShow">
+          <v-list-item title="Guess Game" subtitle="hello"></v-list-item>
+          <v-divider></v-divider>
+          <v-list-item link title="我超，我可以被点击"></v-list-item>
+          <v-list-item link title="我超，我不可以被点击" disabled></v-list-item>
+          <v-list-item link title="我超，点点我的"></v-list-item>
+        </v-navigation-drawer>
+
     </v-main>
   </v-app>
 </template>
@@ -77,6 +86,7 @@ const GameData = useGameData()
 const { numberChoose } = storeToRefs(GameData)
 const winAttribute = storeToRefs(GameData).alertRightShow
 const showError = storeToRefs(GameData).alertErrorShow
+let sidebarShow = ref<boolean>(false)
 
 const menuActive = ref<boolean>(false) // 控制下拉菜单的显示和隐藏
 const textRealNum = computed<string>(() => {
