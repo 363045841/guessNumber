@@ -68,9 +68,8 @@
           </v-row>
         </v-container>
       </div>
-
-      <sidebar :sidebarShow></sidebar>
-
+      <sidebar v-model:sidebarShow="sidebarShow"></sidebar>
+      <router-view></router-view>
     </v-main>
   </v-app>
 </template>
@@ -79,7 +78,7 @@
 import { ref, computed } from 'vue'
 import { useGameData } from './stores/gamedata';
 import { storeToRefs } from 'pinia';
-import sidebar from './styles/sidebar.vue';
+import sidebar from './sidebar.vue';
 const GameData = useGameData()
 const { numberChoose } = storeToRefs(GameData)
 const winAttribute = storeToRefs(GameData).alertRightShow
@@ -128,3 +127,5 @@ onMounted(() => {
   margin-bottom: -12px;
 }
 </style>
+<!-- TODO:用户数据切换用router实现 -->
+<!-- TODO:支持下拉刷新 -->
