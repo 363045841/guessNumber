@@ -1,5 +1,5 @@
 <template>
-    <v-navigation-drawer v-model="show" class="sidebar" app temporary>
+    <v-navigation-drawer v-model="show" class="sidebar" app temporary :class="responsiveClass">
         <v-list-item title="切换用户" :subtitle="currentUserText"></v-list-item>
         <v-divider></v-divider>
         <template v-for="(item, key) in userList" :key="key">
@@ -24,6 +24,10 @@ const prop = defineProps({
     sidebarShow: {
         type: Boolean,
         default: false,
+    },
+    responsiveClass: {
+        type: String,
+        default: 'md',
     },
 });
 

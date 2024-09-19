@@ -68,7 +68,7 @@
           </v-row>
         </v-container>
       </div>
-      <sidebar v-model:sidebarShow="sidebarShow"></sidebar>
+      <sidebar v-model:sidebarShow="sidebarShow" :responsiveClass></sidebar>
       <router-view></router-view>
     </v-main>
   </v-app>

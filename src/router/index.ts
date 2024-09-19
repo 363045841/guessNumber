@@ -1,8 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import UserInfo from '@/userInfo.vue';
-import App from '@/App.vue';
 import emptyComponent from '@/emptyComponent.vue';
-import { components } from 'vuetify/dist/vuetify-labs.js';
 const routes = [
   {
     path: '/guessNum/user/:id/:exp',

@@ -1,19 +1,13 @@
 <template>
-    <v-container class="info" fluid>
-        <v-row justify="center" align="center">
-            <v-col cols="12" md="5" class="d-flex justify-center align-center">
-                <h1></h1>
-                <v-banner class="my-4" color="deep-purple-accent-4" icon="mdi-lock" lines="one">
-                    <v-banner-text>
-                        {{ id }},你的分数是{{ exp }}
-                    </v-banner-text>
-
-                    <template v-slot:actions>
-                        <v-btn @click="returnToHome()">确认</v-btn>
-                    </template>
-                </v-banner>
-            </v-col>
-        </v-row>
+    <v-container fluid :class="responsiveClass" class="info">
+        <v-banner color="#3F51B5" icon="mdi-lock" lines="one">
+            <v-banner-text>
+                {{ id }},你的分数是{{ exp }}
+            </v-banner-text>
+            <template v-slot:actions>
+                <v-btn @click="returnToHome()">确认</v-btn>
+            </template>
+        </v-banner>
     </v-container>
 </template>
 
@@ -30,4 +24,18 @@ onMounted(() => {
 function returnToHome() {
     router.push('/guessNum')
 }
+
+const responsiveClass = computed<string>(() => {
+    console.log(window.innerWidth < 600 ? 'mobile' : 'desktop')
+    return window.innerWidth < 600 ? 'mobile' : 'desktop'
+})
 </script>
+<style scoped>
+.desktop .info {
+    width: 50%;
+}
+
+.mobile .info {
+    width: 90%;
+}
+</style>
