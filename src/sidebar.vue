@@ -1,5 +1,5 @@
 <template>
-    <v-navigation-drawer v-model="show" class="sidebar" app temporary :class="responsiveClass">
+    <v-navigation-drawer v-model="show" class="sidebar" app temporary :class="responsiveClass" @update:model-value="sideBarClose()">
         <v-list-item title="切换用户" :subtitle="currentUserText"></v-list-item>
         <v-divider></v-divider>
         <template v-for="(item, key) in userList" :key="key">
@@ -47,6 +47,13 @@ function changeUser(newUserID: string) {
     let exp = userData.userList.find((item) => item.id === newUserID)?.exp;
     router.push(`/guessNum/user/${newUserID}/${exp}`);
     emit('update:sidebarShow', false);
+}
+
+function sideBarClose(value: boolean) {
+    show.value = false;
+    if (!value){
+        emit('update:sidebarShow', false);
+    }
 }
 </script>
 
