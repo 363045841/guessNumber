@@ -48,7 +48,12 @@
             <v-container>
               <v-row align="center">
                 <v-col class="d-flex justify-center align-center">
-                  <v-text-field label="Enter a number you guess" hide-details="auto" v-model="numberChoose" />
+                  <v-text-field hide-details="auto" v-model="numberChoose">
+                    <template #label>
+                      <span class="input-label">Enter a number you guess</span>
+                    </template>
+                    
+                  </v-text-field>
                 </v-col>
                 <v-col cols="auto" class="d-flex justify-center align-center">
                   <v-btn variant="tonal" :ripple="true" @click="GameData.submitNumber()" color="#3F51B5">提交</v-btn>
@@ -132,7 +137,7 @@ onMounted(() => {
   margin-bottom: -12px;
 }
 
-.sub-title {
+.sub-title,.input-label {
     white-space: normal; /* 允许正常换行 */
     word-break: break-word; /* 长单词换行 */
     overflow-wrap: break-word; /* 长单词自动换行 */
