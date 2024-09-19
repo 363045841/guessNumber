@@ -1,5 +1,5 @@
 <template>
-    <v-navigation-drawer v-model="show" class="sidebar" app temporary :class="responsiveClass" @update:model-value="sideBarClose()">
+    <v-navigation-drawer v-model="show" class="sidebar" app temporary :class="responsiveClass" @update:model-value="sideBarClose">
         <v-list-item title="切换用户" :subtitle="currentUserText"></v-list-item>
         <v-divider></v-divider>
         <template v-for="(item, key) in userList" :key="key">

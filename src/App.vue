@@ -36,9 +36,14 @@
 
       <div class="guess-area">
         <v-container class="game-area">
-          <v-card prepend-icon="mdi-counter" :subtitle="textRealNum">
-            <template v-slot:title>
+          <v-card  prepend-icon="mdi-counter">
+            <template #title>
               <span class="font-weight-black">猜数字</span>
+            </template>
+            <template #subtitle>
+              <div class="sub-title">
+                {{ textRealNum }}
+              </div>
             </template>
             <v-container>
               <v-row align="center">
@@ -126,6 +131,15 @@ onMounted(() => {
   margin-top: 12px;
   margin-bottom: -12px;
 }
+
+.sub-title {
+    white-space: normal; /* 允许正常换行 */
+    word-break: break-word; /* 长单词换行 */
+    overflow-wrap: break-word; /* 长单词自动换行 */
+    max-width: 100%; /* 确保内容不超出容器 */
+    line-height: 1.5em; /* 设置行高，确保阅读性 */
+    word-wrap: break-word; /* 确保小屏幕也不会溢出 */
+    font-size: 16px; /* 控制字体大小，适应不同屏幕 */
+}
 </style>
-<!-- TODO:用户数据切换用router实现 -->
 <!-- TODO:支持下拉刷新 -->
