@@ -20,6 +20,9 @@ const userList: User[] = userData.userList;
 let currentUser = ref<string>('default');
 let currentUserText = computed(() => '当前用户:' + currentUser.value);
 
+console.log(userData.userList);
+
+
 const prop = defineProps({
     sidebarShow: {
         type: Boolean,

@@ -1,16 +1,22 @@
 <template>
   <v-app>
     <v-main id="main" :class="responsiveClass">
-      <v-app-bar :style="{ color: 'white' }" class="app-bar" app image="./assets/a4754a82ckef2a11a55447d8f48a81f7.jpg">
+      <v-app-bar :style="{ color: 'white' }" class="app-bar" app :image="picData.picUrl">
         <v-app-bar-nav-icon @click="sidebarShow = !sidebarShow"></v-app-bar-nav-icon>
         <template v-slot:append>
           <v-tooltip location="bottom">
             <template v-slot:activator="{ props }">
               <v-btn v-bind="props" icon="mdi-refresh" @click="playAgain()"></v-btn>
+
             </template>
             <span>重新开始</span>
           </v-tooltip>
-
+          <v-tooltip location="bottom">
+            <template v-slot:activator="{ props }">
+              <v-btn v-bind="props" icon="mdi-shuffle" @click="refreshPicUrl"></v-btn>
+            </template>
+            <span>换一张</span>
+          </v-tooltip>
           <v-menu v-model:active="menuActive" offset-y transition="scale-transition">
             <template v-slot:activator="{ props }">
               <v-btn v-bind="props" icon="mdi-dots-vertical" @click="menuActive = !menuActive"></v-btn>
@@ -29,14 +35,13 @@
               </v-list-item>
             </v-list>
           </v-menu>
-
         </template>
         <v-toolbar-title>Guess Number</v-toolbar-title>
       </v-app-bar>
 
       <div class="guess-area">
         <v-container class="game-area">
-          <v-card  prepend-icon="mdi-counter">
+          <v-card prepend-icon="mdi-counter">
             <template #title>
               <span class="font-weight-black">猜数字</span>
             </template>
@@ -48,11 +53,10 @@
             <v-container>
               <v-row align="center">
                 <v-col class="d-flex justify-center align-center">
-                  <v-text-field hide-details="auto" v-model="numberChoose">
-                    <template #label>
-                      <span class="input-label">Enter a number you guess</span>
-                    </template>
-                    
+                  <v-text-field hide-details="auto" v-model="numberChoose" label="Enter a number you guess">
+                    <!-- <template #label>
+                      <span class="input-label"></span>
+                    </template> -->
                   </v-text-field>
                 </v-col>
                 <v-col cols="auto" class="d-flex justify-center align-center">
@@ -80,6 +84,7 @@
       </div>
       <sidebar v-model:sidebarShow="sidebarShow" :responsiveClass></sidebar>
       <router-view></router-view>
+
     </v-main>
   </v-app>
 </template>
@@ -89,6 +94,8 @@ import { ref, computed } from 'vue'
 import { useGameData } from './stores/gamedata';
 import { storeToRefs } from 'pinia';
 import sidebar from './sidebar.vue';
+import { usePicData } from './stores/picData';
+const picData = usePicData()
 const GameData = useGameData()
 const { numberChoose } = storeToRefs(GameData)
 const winAttribute = storeToRefs(GameData).alertRightShow
@@ -113,6 +120,11 @@ onMounted(() => {
   console.log('mounted')
   GameData.initRandomNumber()
 })
+
+function refreshPicUrl() {
+  picData.getRandomPicUrl()
+  console.log(picData)
+}
 </script>
 
 <style scoped>
@@ -137,14 +149,22 @@ onMounted(() => {
   margin-bottom: -12px;
 }
 
-.sub-title,.input-label {
-    white-space: normal; /* 允许正常换行 */
-    word-break: break-word; /* 长单词换行 */
-    overflow-wrap: break-word; /* 长单词自动换行 */
-    max-width: 100%; /* 确保内容不超出容器 */
-    line-height: 1.5em; /* 设置行高，确保阅读性 */
-    word-wrap: break-word; /* 确保小屏幕也不会溢出 */
-    font-size: 16px; /* 控制字体大小，适应不同屏幕 */
+.sub-title,
+.input-label {
+  white-space: normal;
+  /* 允许正常换行 */
+  word-break: break-word;
+  /* 长单词换行 */
+  overflow-wrap: break-word;
+  /* 长单词自动换行 */
+  max-width: 100%;
+  /* 确保内容不超出容器 */
+  line-height: 1.5em;
+  /* 设置行高，确保阅读性 */
+  word-wrap: break-word;
+  /* 确保小屏幕也不会溢出 */
+  font-size: 16px;
+  /* 控制字体大小，适应不同屏幕 */
 }
 </style>
 <!-- TODO:支持下拉刷新 -->
