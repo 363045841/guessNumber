@@ -1,9 +1,9 @@
 <template>
     <v-navigation-drawer v-model="show" class="sidebar" app temporary :class="responsiveClass" @update:model-value="sideBarClose">
-        <v-list-item title="切换用户" :subtitle="currentUserText"></v-list-item>
+        <v-list-item title="切换用户" :subtitle="currentUserText" prepend-icon="mdi-reload"></v-list-item>
         <v-divider></v-divider>
         <template v-for="(item, key) in userList" :key="key">
-            <v-list-item link v-if="item.id !== currentUser" :title="item.id" :key="key" @click="changeUser(item.id)">
+            <v-list-item link v-if="item.id !== currentUser" :title="item.id" :key="key" @click="changeUser(item.id)" prepend-icon="mdi-account">
             </v-list-item>
         </template>
     </v-navigation-drawer>

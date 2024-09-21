@@ -39,49 +39,50 @@
         <v-toolbar-title>Guess Number</v-toolbar-title>
       </v-app-bar>
 
-      <div class="guess-area">
-        <v-container class="game-area">
-          <v-card prepend-icon="mdi-counter">
-            <template #title>
-              <span class="font-weight-black">猜数字</span>
-            </template>
-            <template #subtitle>
-              <div class="sub-title">
-                {{ textRealNum }}
-              </div>
-            </template>
-            <v-container>
-              <v-row align="center">
-                <v-col class="d-flex justify-center align-center">
-                  <v-text-field hide-details="auto" v-model="numberChoose" label="Enter a number you guess">
-                    <!-- <template #label>
-                      <span class="input-label"></span>
-                    </template> -->
-                  </v-text-field>
+
+      <v-container class="game-area" fluid>
+        <v-row align="center">
+          <v-col style="margin: auto;margin-top: 12px;">
+            <v-card prepend-icon="mdi-counter">
+              <template #title>
+                <span class="font-weight-black">猜数字</span>
+              </template>
+              <template #subtitle>
+                <div class="sub-title">
+                  {{ textRealNum }}
+                </div>
+              </template>
+              <!-- change here -->
+              <v-row align="center" class="my-2" style="margin: 12px;">
+                <v-col md="10" xs="8" class="d-flex justify-center align-center" style="flex-grow: 1;">
+                  <v-text-field hide-details="auto" v-model="numberChoose"
+                    label="Enter a number you guess"></v-text-field>
                 </v-col>
-                <v-col cols="auto" class="d-flex justify-center align-center">
+                <v-col md="2" xs="4" class="d-flex justify-center align-center" style="margin: auto; flex-grow: 0;">
                   <v-btn variant="tonal" :ripple="true" @click="GameData.submitNumber()" color="#3F51B5">提交</v-btn>
                 </v-col>
               </v-row>
-            </v-container>
-          </v-card>
-        </v-container>
 
-        <v-container class="game-area">
-          <v-row align="center" justify="center">
-            <v-col class="d-flex justify-center align-center">
-              <v-fade-transition>
-                <v-alert v-if="winAttribute && GameData.isSubmit" text="你答对了" title="恭喜" type="success">
-                </v-alert>
-                <v-alert v-if="showError && GameData.isSubmit" text="你答错了" title="该死" type="error">
-                </v-alert>
-                <v-alert v-model="GameData.restoreShow" :text="GameData.restoreText" title="恢复数据" type="success">
-                </v-alert>
-              </v-fade-transition>
-            </v-col>
-          </v-row>
-        </v-container>
-      </div>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-container>
+
+      <v-container class="game-area">
+        <v-row align="center" justify="center">
+          <v-col class="d-flex justify-center align-center">
+            <v-fade-transition>
+              <v-alert v-if="winAttribute && GameData.isSubmit" text="你答对了" title="恭喜" type="success">
+              </v-alert>
+              <v-alert v-if="showError && GameData.isSubmit" text="你答错了" title="该死" type="error">
+              </v-alert>
+              <v-alert v-model="GameData.restoreShow" :text="GameData.restoreText" title="恢复数据" type="success">
+              </v-alert>
+            </v-fade-transition>
+          </v-col>
+        </v-row>
+      </v-container>
+
       <sidebar v-model:sidebarShow="sidebarShow" :responsiveClass></sidebar>
       <router-view></router-view>
 
@@ -95,6 +96,7 @@ import { useGameData } from './stores/gamedata';
 import { storeToRefs } from 'pinia';
 import sidebar from './sidebar.vue';
 import { usePicData } from './stores/picData';
+import { useDisplay } from 'vuetify';
 const picData = usePicData()
 const GameData = useGameData()
 const { numberChoose } = storeToRefs(GameData)
@@ -125,6 +127,13 @@ function refreshPicUrl() {
   picData.getRandomPicUrl()
   console.log(picData)
 }
+
+const display = useDisplay();
+/* const responsiveClass = computed<string>(() => {
+  return display.md.value ? 'desktop' : 'mobile';
+}); */
+console.log('shi md ma', display.md.value);
+console.log('shi xs ma', display.xs.value);
 </script>
 
 <style scoped>
